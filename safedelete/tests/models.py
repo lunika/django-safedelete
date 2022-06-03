@@ -5,6 +5,7 @@ from safedelete import (
     HARD_DELETE,
     HARD_DELETE_NOCASCADE,
     SOFT_DELETE,
+    SOFT_DELETE_CASCADE
 )
 from safedelete.managers import SafeDeleteManager
 from safedelete.models import SafeDeleteModel
@@ -44,3 +45,13 @@ class Article(SafeDeleteModel):
         null=True,
         default=None
     )
+
+# OneToOne relation
+
+class Book(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
+
+    name = models.CharField(max_length=100)
+    author = models.OneToOneField(
+        Author,
+        on_delete=models.CASCADE)
